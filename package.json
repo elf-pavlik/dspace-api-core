@@ -29,6 +29,9 @@
   "bugs": {
     "url": "https://github.com/DSpace-NG/dspace-api-core/issues"
   },
+  "dependencies": {
+    "node-uuid": "~1.4.1"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-connect": "~0.5.0",
