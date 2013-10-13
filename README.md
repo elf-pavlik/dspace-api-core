@@ -20,3 +20,11 @@ Install dependencies
 Run development deamon
 
     $ grunt
+
+## Testing
+
+We use [Karma](http://karma-runner.github.io/) to run our tests with simple
+
+    $ npm test
+
+It also supports desktop notifications!
