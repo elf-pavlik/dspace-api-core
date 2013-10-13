@@ -30,7 +30,8 @@
     "url": "https://github.com/DSpace-NG/dspace-api-core/issues"
   },
   "dependencies": {
-    "node-uuid": "~1.4.1"
+    "node-uuid": "~1.4.1",
+    "level-js": "~1.0.8"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
