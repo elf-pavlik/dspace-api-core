@@ -1,48 +1,41 @@
-var Story = require('../collections/story');
-var Track  = require('../collections/track');
+var DSpace = require('../dspace'); //FIXME use global?
 
 var User = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
-  initialize: function() {
-    _.bindAll(this, 'save', 'updateLocation');
-    this.set('@type', 'profile', { silent: true });
-    this.on('change', this.save);
+  initialize: function(){
+    _.bindAll(this, 'cache');
 
-    this.profileKey = 'profile-' + this.get('uuid');
-
-    if(localStorage[this.profileKey]) {
-      this.set(JSON.parse(localStorage[this.profileKey]));
+    // error if no uuid
+    if(!this.get('uuid')){
+      throw 'UUID required!';
     }
 
-    // initiate track and story
-    this.story = new Story([], { url: this.get('uuid') });
-    this.story.fetch();
-
-    this.track = new Track([], { url: this.get('uuid') });
-    this.track.fetch();
-
+    this.set('@type', 'person', { silent: true });
+    this.on('change', this.cache);
   },
 
-  save: function() {
-    localStorage[this.profileKey] = JSON.stringify(this.toJSON());
+  cache: function(){
+    DSpace.cache.put(this.id + '/profile', this.toJSON(), function(err){
+      if(err){
+        console.log(err);
+      }
+      this.trigger('cached');
+    });
   },
 
-  currentLocation: function() {
-    return this.track.at(this.track.length - 1);
-  },
-
-  updateLocation: function(location) {
-    var current = this.currentLocation();
-    if(current &&
-       current.get('lat') == location.get('lat') &&
-       current.get('lng') == location.get('lng')) {
-      return; // location didn't actually change.
-    }
-    this.track.add(location);
-    this.trigger('location', this.currentLocation());
+  load: function(){
+    DSpace.cache.get(this.id + '/profile', function(err, data){
+      if(err){
+        console.log(err);
+        return;
+      }
+      this.set(data);
+      this.trigger('loaded');
+    }.bind(this));
   }
+
 });
 
 module.exports = User;

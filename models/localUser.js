@@ -17,7 +17,7 @@ var LocalUser = User.extend({
       localStorage.uuid = this.get('uuid');
     }
 
-    //User.prototype.initialize.call(this);
+    User.prototype.initialize.call(this);
   }
 });
 
