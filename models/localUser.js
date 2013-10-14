@@ -1,10 +1,15 @@
 var User = require('./user');
-var Tracker = require('./tracker');
 var uuid = require('node-uuid');
 
 var LocalUser = User.extend({
 
   initialize: function() {
+    /*
+     * set uuid
+     * * use one saved in localStorage
+     * * or generate new one and save to localStorage
+     *
+     */
     if(localStorage.uuid) {
       this.set("uuid", localStorage.uuid, {silent: true});
     } else {
@@ -12,13 +17,7 @@ var LocalUser = User.extend({
       localStorage.uuid = this.get('uuid');
     }
 
-    User.prototype.initialize.call(this);
-
-    this.tracker = new Tracker(_.extend({ user: this }, this.get('tracker')));
-    this.unset('tracker');
-    this.on('change', this.tracker.profile);
-    this.track.on('add', this.tracker.location);
-    this.story.on('add', this.tracker.capture);
+    //User.prototype.initialize.call(this);
   }
 });
 
