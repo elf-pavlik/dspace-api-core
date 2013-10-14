@@ -2,16 +2,12 @@
 
 Core components of programable interfaces for DSpace-NG
 
-## Documentation
-
-**TODO**
-
-## Development
+## Developing
 
 First of all you need *node* and *npm* which you can install using [NVM](https://github.com/creationix/nvm)
-We also use [Grunt]() which you can get with
 
-    $ npm install -g grunt-cli
+We use [Grunt](http://gruntjs.com/) to run tasks, watch files, and show
+desktop notifications
 
 Install dependencies
 
@@ -23,8 +19,17 @@ Run development deamon
 
 ## Testing
 
-We use [Karma](http://karma-runner.github.io/) to run our tests with simple
+We use [Karma](http://karma-runner.github.io/) to run tests and watch files
 
     $ npm test
 
-It also supports desktop notifications!
+It also supports desktop notifications
+
+## Documenting
+
+For livepreview of README when you edit it
+
+    $ grunt doc
+
+which should open doc folder in your browser, or manually navigate to
+http://localhost:8111

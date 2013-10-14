@@ -6,21 +6,23 @@ module.exports = function(grunt) {
     connect: {
       doc: {
         options: {
-          port: 8011,
-          hostname: "*",
-          base: 'tmp',
+          port: 8111,
+          hostname: '*',
+          base: 'tmp/doc',
+          directory: 'tmp/doc',
+          open: true,
           livereload: 35830
         }
       }
     },
     watch: {
       src: {
-        files: "src/**",
-        tasks: ["jshint"]
+        files: ['models/*.js', 'collections/*.js'],
+        tasks: ['jshint']
       },
       doc: {
-        files: "README.md",
-        tasks:["markdown"],
+        files: 'README.md',
+        tasks:['markdown'],
         options: {
           livereload: 35830
         },
@@ -31,13 +33,13 @@ module.exports = function(grunt) {
         files: [
           {
             src: 'README.md',
-            dest: 'tmp/README.md.html'
+            dest: 'tmp/doc/README.md.html'
           }
         ]
       }
     },
     jshint: {
-      all: ["Gruntfile.js", "src/**"]
+      all: ['Gruntfile.js', 'dspace.js', 'models/*.js', 'collections/*.js']
     },
     browserify: {
       test: {
@@ -56,6 +58,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-notify');
 
   // Default task(s).
-  grunt.registerTask('default', ['markdown', 'jshint', 'browserify', 'connect', 'watch']);
+  grunt.registerTask('default', ['jshint', 'browserify', 'watch:src']);
+  grunt.registerTask('doc', ['markdown', 'connect:doc', 'watch:doc']);
 
 };
