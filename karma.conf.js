@@ -9,7 +9,7 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha', 'sinon-chai'],
+    frameworks: ['browserify', 'mocha', 'sinon-chai'],
 
 
     // list of files / patterns to load in the browser
@@ -17,10 +17,16 @@ module.exports = function(config) {
       'test/shims/zepto.js',
       'test/shims/lodash.js',
       'test/shims/backbone.js',
-      'test/bundle.js',
       'test/**/*Spec.js',
     ],
 
+    preprocessors: {
+      'test/**/*Spec.js': ['browserify']
+    },
+
+    browserify: {
+      watch: true
+    },
 
     // list of files to exclude
     exclude: [
@@ -58,7 +64,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // If browser does not capture in given timeout [ms], kill it

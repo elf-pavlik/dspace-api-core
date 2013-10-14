@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: ['models/*.js', 'collections/*.js'],
+        files: ['dspace.js', 'models/*.js', 'collections/*.js'],
         tasks: ['jshint']
       },
       doc: {
@@ -40,12 +40,6 @@ module.exports = function(grunt) {
     },
     jshint: {
       all: ['Gruntfile.js', 'dspace.js', 'models/*.js', 'collections/*.js']
-    },
-    browserify: {
-      test: {
-        src: ['models/*.js', 'collections/*.js'],
-        dest: 'test/bundle.js'
-      }
     }
   });
 
@@ -54,11 +48,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-notify');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'browserify', 'watch:src']);
+  grunt.registerTask('default', ['jshint', 'watch:src']);
   grunt.registerTask('doc', ['markdown', 'connect:doc', 'watch:doc']);
 
 };
