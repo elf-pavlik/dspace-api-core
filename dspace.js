@@ -7,34 +7,18 @@ var DSpace = function(name){
   _.extend(this, Backbone.Events);
 
   /*
-   * ready states
+   * ready event
    *
-   * we need to check for few things before starting!
+   * we need to setup cache first
    */
-  this.ready = {
-    cache: false
-  };
 
-  this.checkReady = function(){
-    if(this.ready.cache){ //#FIXME
-      this.trigger('ready');
-    }
-  };
-
-  //#FIXME don't duplicate list of states!
-  this.on('cache:ready', this.checkReady.bind(this)); //FIXME need bind?
-
-  /*
-   * create cache
-   */
   this.cache = leveljs(name);
   this.cache.open(function(err){
     if(err){
       console.log(err);
       return;
     }
-    this.ready.cache = true;
-    this.trigger('cache:ready');
+    this.trigger('ready');
   }.bind(this));
 
 };
