@@ -1,26 +1,27 @@
 var leveljs = require('level-js');
 
-var DSpace = {};
+var DSpace = function(namespace){
 
-/*
- * enable events
- */
-_.extend(DSpace, Backbone.Events);
+  /*
+   * enable events
+   */
+  _.extend(this, Backbone.Events);
 
-/*
- * ready event
- *
- * we need to setup cache first
- */
+  /*
+   * ready event
+   *
+   * we need to setup cache first
+   */
 
-DSpace.cache = leveljs('dspace'); //FIXME no hardcoding!
+  this.store = leveljs(namespace);
 
-DSpace.cache.open(function(err){
-  if(err){
-    console.log(err);
-    return;
-  }
-  this.trigger('ready');
-}.bind(DSpace));
+  this.store.open(function(err){
+    if(err){
+      console.log(err);
+      return;
+    }
+    this.trigger('ready');
+  }.bind(this));
+};
 
 module.exports = DSpace;

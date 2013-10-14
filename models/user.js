@@ -1,11 +1,14 @@
-var DSpace = require('../dspace'); //FIXME use global?
-
 var User = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
-  initialize: function(){
+  initialize: function(attributes, options){
     _.bindAll(this, 'cache');
+
+    // easy access to store
+    if(options && options.store){
+      this.store = options.store;
+    }
 
     // error if no uuid
     if(!this.get('uuid')){
@@ -17,7 +20,7 @@ var User = Backbone.Model.extend({
   },
 
   cache: function(){
-    DSpace.cache.put(this.id + '/profile', this.toJSON(), function(err){
+    this.store.put(this.id + '/profile', this.toJSON(), function(err){
       if(err){
         console.log(err);
       }
@@ -26,7 +29,7 @@ var User = Backbone.Model.extend({
   },
 
   load: function(){
-    DSpace.cache.get(this.id + '/profile', function(err, data){
+    this.store.get(this.id + '/profile', function(err, data){
       if(err){
         console.log(err);
         return;

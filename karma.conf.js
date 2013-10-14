@@ -17,7 +17,7 @@ module.exports = function(config) {
       'test/shims/zepto.js',
       'test/shims/lodash.js',
       'test/shims/backbone.js',
-      'test/**/*Spec.js',
+      'test/**/*Spec.js'
     ],
 
     preprocessors: {

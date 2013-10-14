@@ -1,28 +1,43 @@
+var DSpace = require('../dspace');
 var User = require('../models/user');
+
 
 describe('User', function(){
 
+    var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+
   describe('initialize', function(){
 
-    var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
-    var user = new User({ uuid: uuid });
-
     it('should use uuid attribute as id', function(){
+      var user = new User({ uuid: uuid });
       expect(user.id).to.equal(uuid);
     });
 
     it('should set @type to *person*', function(){
+      var user = new User({ uuid: uuid });
       expect(user.get('@type')).to.equal('person');
     });
 
-    it('should cache data when it changes', function(){
-      sinon.spy(user, 'cache');
-      user.set('name', 'Jane');
-      //expect(user.cache).calledOnce; #FIXME why fails?
+    it('should set store if passed in options',function(){
+      var user = new User({ uuid: uuid }, { store: {} });
+      expect(user.store).to.be.an('object');
     });
+
+    it('should throw error if no uuid');
   });
 
   describe('cache', function(){
+    //FIXME
+    //it('should cache data when it changes', function(done){
+      //var dspace = new DSpace('test');
+      //dspace.on('ready', function() {
+        //var user = new User({ uuid: uuid }, { store: dspace.store });
+        //sinon.spy(user, 'cache');
+        //user.set('name', 'Jane');
+        //expect(user.cache).calledOnce;
+        //done();
+      //});
+    //});
     it('should trigger event *cached*');
   });
 
