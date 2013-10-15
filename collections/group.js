@@ -1,18 +1,15 @@
-var RemoteOperator = require('../models/remoteOperator');
+var Operator = require('../models/operator');
 
-var OperatorsCollection = Backbone.Collection.extend({
-  model: RemoteOperator,
+var Group = Backbone.Collection.extend({
 
-  initialize: function() {
-    this.on('add', function(operator){
-      var ids = JSON.parse(localStorage.ids);
-      var uuid = operator.get('uuid');
-      if(ids.indexOf(uuid) < 0){
-        ids.push(uuid);
-        localStorage.ids = JSON.stringify(ids);
-      }
-    });
-  }
+  model: Operator,
+
+  initialize: function(){},
+
+  cache: function(){},
+
+  load: function(){}
+
 });
 
-module.exports = OperatorsCollection;
+module.exports = Group;
