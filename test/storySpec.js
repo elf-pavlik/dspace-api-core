@@ -1,5 +1,4 @@
 var Story = require('../collections/story');
-var Capture = require('../models/capture');
 
 describe('Story', function(){
 

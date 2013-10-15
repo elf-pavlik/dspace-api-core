@@ -1,7 +1,7 @@
-var Capture = require('../models/capture');
+var Action = require('../models/action');
 
 var Story = Backbone.Collection.extend({
-  model: Capture,
+  model: Action,
 
   initialize: function(models, options){
     _.bindAll(this, 'cache');

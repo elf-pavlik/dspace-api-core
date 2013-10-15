@@ -1,6 +1,6 @@
 var uuid = require('node-uuid');
 
-var Capture = Backbone.Model.extend({
+var Action = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
@@ -45,4 +45,4 @@ var Capture = Backbone.Model.extend({
   }
 });
 
-module.exports = Capture;
+module.exports = Action;
