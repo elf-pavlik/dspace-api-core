@@ -6,7 +6,7 @@ var Operator = Backbone.Model.extend({
   idAttribute: 'uuid',
 
   initialize: function(attributes, options){
-    _.bindAll(this, 'cache');
+    _.bindAll(this, 'cache', '_newPosition');
 
     // easy access to store
     if(options && options.store){
@@ -26,6 +26,11 @@ var Operator = Backbone.Model.extend({
     this.story = new Story([], { operator: this });
 
     // geolocation
+    // for now only LocalOperator!
+    if(this.geolocation){
+      this.geolocation.enable();
+      this.geolocation.on('position', this._newPosition);
+    }
   },
 
   cache: function(){
@@ -48,6 +53,16 @@ var Operator = Backbone.Model.extend({
       this.set(data);
       this.trigger('loaded');
     }.bind(this));
+  },
+
+  // returns current position by taking last element from track
+  currentPosition: function(){
+    return this.track.at(this.track.length - 1);
+  },
+
+  // callback for geolocation which adds positions to track
+  _newPosition: function(position){
+    this.track.add(position);
   }
 
 });

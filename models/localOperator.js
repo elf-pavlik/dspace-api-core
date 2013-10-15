@@ -1,4 +1,5 @@
 var Operator = require('./operator');
+var BrowserGeoLocation = require('../channels/browserGeoLocation');
 var uuid = require('node-uuid');
 
 var LocalOperator = Operator.extend({
@@ -17,6 +18,10 @@ var LocalOperator = Operator.extend({
       localStorage.uuid = this.get('uuid');
     }
 
+    // use browser geolocation
+    this.geolocation = new BrowserGeoLocation();
+
+    // super
     Operator.prototype.initialize.call(this);
   }
 });

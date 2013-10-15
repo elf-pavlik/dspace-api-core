@@ -1,15 +1,19 @@
 var DSpace = require('../dspace');
+
 var Operator = require('../models/operator');
+var LocalOperator = require('../models/localOperator');
+var RemoteOperator = require('../models/remoteOperator');
+
 var Track = require('../collections/track');
 var Story = require('../collections/story');
-
 
 describe('Operator', function(){
 
   var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
-  var operator = new Operator({ uuid: uuid });
 
   describe('initialize', function(){
+
+    var operator = new Operator({ uuid: uuid });
 
     it('should use uuid attribute as id', function(){
       expect(operator.id).to.equal(uuid);
@@ -34,7 +38,20 @@ describe('Operator', function(){
       expect(operator.story).to.be.an.instanceOf(Story);
     });
 
-    it('should initialize geolocation');
+
+  });
+
+  //FIXME for now we test with LocalOperator, soon same API for RemoteOperator
+  describe('geolocation', function(){
+
+    operator = new LocalOperator();
+
+    it('should enable geolocation', function(){
+      expect(operator.geolocation.isEnabled()).to.be.true;
+    });
+
+    it('should subscribe to *position* event'); // ???
+
   });
 
   describe('cache', function(){
@@ -55,10 +72,44 @@ describe('Operator', function(){
   describe('load', function(){
     it('should trigger event *loaded*');
   });
+
+  describe('geo', function(){
+
+    var firstPosition = { coords: { latitude: 47, longitude: 15}, timestamp: 1381855568774 };
+    var secondPosition = { coords: { latitude: 55, longitude: 22}, timestamp: 1381855569774 };
+    var thirdPosition = { coords: { latitude: 52, longitude: 28}, timestamp: 1381855572774  };
+
+    describe('currentPosition', function(){
+
+      it('should return *undefined* if track empty', function(){
+        expect(operator.track.length).to.equal(0);
+        expect(operator.currentPosition()).to.be.undefined;
+      });
+
+      it('should return last position on track', function(){
+        operator.track.add(firstPosition);
+        operator.track.add(secondPosition);
+        expect(operator.currentPosition().toJSON()).to.deep.equal(secondPosition);
+      });
+    });
+
+    describe('_newPosition', function(){
+
+
+      it('should add it to track', function(){
+        operator.track.reset();
+        operator.track.add(firstPosition);
+
+        operator._newPosition(secondPosition);
+        expect(operator.track.length).to.equal(2);
+        operator._newPosition(thirdPosition);
+        expect(operator.track.length).to.equal(3);
+      });
+
+    });
+  });
 });
 
-
-var LocalOperator = require('../models/localOperator');
 
 describe('LocalOperator', function(){
 
@@ -80,10 +131,14 @@ describe('LocalOperator', function(){
       expect(operator.get('uuid')).to.exist;
       expect(localStorage.uuid).to.equal(operator.get('uuid'));
     });
+
+    it('should initialize geolocation', function(){
+      var operator = new LocalOperator();
+      expect(operator.geolocation).to.be.an('object');
+    });
   });
 });
 
-var RemoteOperator = require('../models/remoteOperator');
 
 describe('RemoteOperator', function(){
 });
