@@ -1,23 +1,27 @@
 var Track = Backbone.Collection.extend({
 
-  initialize: function() {
-    _.bindAll(this, 'save');
-    this.on('add', this.save);
+  initialize: function(models, options){
+    _.bindAll(this, 'cache');
+    this.on('add', this.cache);
 
-    // for now faking url to pass user's uuid
-    if(this.url) {
-      this.storageKey = 'track-' + this.url;
+    // expects operator
+    if(!options || !options.operator){
+      throw 'operator required! who the hell leaves this trace? ;)';
+    }
+    this.operator = options.operator;
+
+    // setup store for caching
+    if(this.operator.store){
+      this.store = this.operator.store;
     }
   },
 
-  fetch: function() {
-    if(localStorage[this.storageKey]){
-      this.reset(JSON.parse(localStorage[this.storageKey]));
-    }
+  cache: function() {
+    console.log('Track.cache()');
   },
 
-  save: function() {
-    localStorage[this.storageKey] = JSON.stringify(this.toJSON());
+  load: function() {
+    console.log('Track.load()');
   }
 });
 

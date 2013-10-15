@@ -1,29 +1,40 @@
 var DSpace = require('../dspace');
 var Operator = require('../models/operator');
+var Track = require('../collections/track');
+var Story = require('../collections/story');
 
 
 describe('Operator', function(){
 
-    var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+  var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+  var operator = new Operator({ uuid: uuid });
 
   describe('initialize', function(){
 
     it('should use uuid attribute as id', function(){
-      var operator = new Operator({ uuid: uuid });
       expect(operator.id).to.equal(uuid);
     });
 
     it('should set @type to *person*', function(){
-      var operator = new Operator({ uuid: uuid });
       expect(operator.get('@type')).to.equal('person');
     });
 
     it('should set store if passed in options',function(){
-      var operator = new Operator({ uuid: uuid }, { store: {} });
+      operator = new Operator({ uuid: uuid }, { store: {} });
       expect(operator.store).to.be.an('object');
     });
 
     it('should throw error if no uuid');
+
+    it('should create track', function(){
+      expect(operator.track).to.be.an.instanceOf(Track);
+    });
+
+    it('should create story', function(){
+      expect(operator.story).to.be.an.instanceOf(Story);
+    });
+
+    it('should initialize geolocation');
   });
 
   describe('cache', function(){
