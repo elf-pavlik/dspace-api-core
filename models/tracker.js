@@ -1,4 +1,4 @@
-
+// FIXME: refoctor + User -> Operator
 var Tracker = function(options) {
   _.bindAll(this, 'location', 'capture', 'profile');
 

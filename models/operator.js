@@ -1,4 +1,4 @@
-var User = Backbone.Model.extend({
+var Operator = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
@@ -41,4 +41,4 @@ var User = Backbone.Model.extend({
 
 });
 
-module.exports = User;
+module.exports = Operator;

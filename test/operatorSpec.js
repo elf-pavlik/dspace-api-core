@@ -1,26 +1,26 @@
 var DSpace = require('../dspace');
-var User = require('../models/user');
+var Operator = require('../models/operator');
 
 
-describe('User', function(){
+describe('Operator', function(){
 
     var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
 
   describe('initialize', function(){
 
     it('should use uuid attribute as id', function(){
-      var user = new User({ uuid: uuid });
-      expect(user.id).to.equal(uuid);
+      var operator = new Operator({ uuid: uuid });
+      expect(operator.id).to.equal(uuid);
     });
 
     it('should set @type to *person*', function(){
-      var user = new User({ uuid: uuid });
-      expect(user.get('@type')).to.equal('person');
+      var operator = new Operator({ uuid: uuid });
+      expect(operator.get('@type')).to.equal('person');
     });
 
     it('should set store if passed in options',function(){
-      var user = new User({ uuid: uuid }, { store: {} });
-      expect(user.store).to.be.an('object');
+      var operator = new Operator({ uuid: uuid }, { store: {} });
+      expect(operator.store).to.be.an('object');
     });
 
     it('should throw error if no uuid');
@@ -31,10 +31,10 @@ describe('User', function(){
     //it('should cache data when it changes', function(done){
       //var dspace = new DSpace('test');
       //dspace.on('ready', function() {
-        //var user = new User({ uuid: uuid }, { store: dspace.store });
-        //sinon.spy(user, 'cache');
-        //user.set('name', 'Jane');
-        //expect(user.cache).calledOnce;
+        //var operator = new Operator({ uuid: uuid }, { store: dspace.store });
+        //sinon.spy(operator, 'cache');
+        //operator.set('name', 'Jane');
+        //expect(operator.cache).calledOnce;
         //done();
       //});
     //});
@@ -47,9 +47,9 @@ describe('User', function(){
 });
 
 
-var LocalUser = require('../models/localUser');
+var LocalOperator = require('../models/localOperator');
 
-describe('LocalUser', function(){
+describe('LocalOperator', function(){
 
   describe('uuid', function(){
 
@@ -60,19 +60,19 @@ describe('LocalUser', function(){
     it('if finds uuid saved in localStorage should use it', function(){
       var uuid = '4a4674b2-3b30-44f0-bbdc-fd2efc64237b';
       localStorage.uuid = uuid;
-      var user = new LocalUser();
-      expect(user.get('uuid')).to.equal(uuid);
+      var operator = new LocalOperator();
+      expect(operator.get('uuid')).to.equal(uuid);
     });
 
     it('if no uuid saved in localStorage should generate on and save it to localStorage', function(){
-      var user = new LocalUser();
-      expect(user.get('uuid')).to.exist;
-      expect(localStorage.uuid).to.equal(user.get('uuid'));
+      var operator = new LocalOperator();
+      expect(operator.get('uuid')).to.exist;
+      expect(localStorage.uuid).to.equal(operator.get('uuid'));
     });
   });
 });
 
-var RemoteUser = require('../models/remoteUser');
+var RemoteOperator = require('../models/remoteOperator');
 
-describe('RemoteUser', function(){
+describe('RemoteOperator', function(){
 });

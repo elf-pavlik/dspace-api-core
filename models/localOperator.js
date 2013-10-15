@@ -1,7 +1,7 @@
-var User = require('./user');
+var Operator = require('./operator');
 var uuid = require('node-uuid');
 
-var LocalUser = User.extend({
+var LocalOperator = Operator.extend({
 
   initialize: function() {
     /*
@@ -17,8 +17,8 @@ var LocalUser = User.extend({
       localStorage.uuid = this.get('uuid');
     }
 
-    User.prototype.initialize.call(this);
+    Operator.prototype.initialize.call(this);
   }
 });
 
-module.exports = LocalUser;
+module.exports = LocalOperator;
