@@ -60,9 +60,12 @@ var Operator = Backbone.Model.extend({
     return this.track.at(this.track.length - 1);
   },
 
-  // callback for geolocation which adds positions to track
+  // callback for geolocation which adds positions to track and triggers event if position changed
   _newPosition: function(position){
     this.track.add(position);
+    if(!_.isEqual(position.coords, this.currentPosition.coords)){
+      this.trigger('change:position', position);
+    }
   }
 
 });

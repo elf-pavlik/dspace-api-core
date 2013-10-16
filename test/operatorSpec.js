@@ -106,6 +106,18 @@ describe('Operator', function(){
         expect(operator.track.length).to.equal(3);
       });
 
+      it('should trigger *change:position* event if really changed and pass position', function(done){
+        operator.track.reset();
+        operator.track.add(firstPosition);
+        operator.on('change:position', function(position){
+          expect(position.coords).to.be.an('object');
+          done();
+        });
+        operator._newPosition(secondPosition);
+      });
+
+      it('should not trigger *change:position* event if not really changed');
+
     });
   });
 });
