@@ -2,7 +2,7 @@
   "name": "dspace-api-core",
   "version": "0.0.1",
   "description": "'Core components of programable interface for DSpace-NG'",
-  "main": "index.js",
+  "main": "dspace.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start karma.conf.js"
   },
@@ -14,12 +14,11 @@
     "DSpace",
     "DSpace-NG"
   ],
-  "author": "",
-  "contributors": [
-    {
+  "author": {
       "name": "☮ elf Pavlik ☮",
       "email": "perpetual-tripper@wwelves.org"
-    },
+  },
+  "contributors": [
     {
       "name": "Niklas E. Cathor",
       "email": "nilclass@riseup.net"
@@ -43,7 +42,6 @@
     "karma": "~0.10.2",
     "karma-mocha": "~0.1.0",
     "karma-sinon-chai": "~0.1.1",
-    "karma-phantomjs-launcher": "~0.1.0",
     "karma-growler-reporter": "0.0.1",
     "karma-browserify": "0.0.5"
   }
