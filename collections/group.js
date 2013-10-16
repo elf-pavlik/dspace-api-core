@@ -1,8 +1,8 @@
-var Operator = require('../models/operator');
+var Player = require('../models/player');
 
 var Group = Backbone.Collection.extend({
 
-  model: Operator,
+  model: Player,
 
   initialize: function(){},
 

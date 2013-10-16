@@ -4,11 +4,11 @@ describe('Track', function(){
 
   describe('initialize', function(){
 
-    var track = new Track([], { operator: {store: {} } });
+    var track = new Track([], { player: {store: {} } });
 
-    it('should throw error if no operator');
-    it('should create accessor for operator', function(){
-      expect(track.operator).to.be.an('object');
+    it('should throw error if no player');
+    it('should create accessor for player', function(){
+      expect(track.player).to.be.an('object');
     });
     it('should create acessor for store', function(){
       expect(track.store).to.be.an('object');

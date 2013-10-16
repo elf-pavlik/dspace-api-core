@@ -1,8 +1,8 @@
-var Operator = require('./operator');
+var Player = require('./player');
 var BrowserGeoLocation = require('../channels/browserGeoLocation');
 var uuid = require('node-uuid');
 
-var LocalOperator = Operator.extend({
+var LocalPlayer = Player.extend({
 
   initialize: function() {
     /*
@@ -22,8 +22,8 @@ var LocalOperator = Operator.extend({
     this.geolocation = new BrowserGeoLocation();
 
     // super
-    Operator.prototype.initialize.call(this);
+    Player.prototype.initialize.call(this);
   }
 });
 
-module.exports = LocalOperator;
+module.exports = LocalPlayer;

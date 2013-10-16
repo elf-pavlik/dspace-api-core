@@ -4,15 +4,15 @@ var Track = Backbone.Collection.extend({
     _.bindAll(this, 'cache');
     this.on('add', this.cache);
 
-    // expects operator
-    if(!options || !options.operator){
-      throw 'operator required! who the hell leaves this trace? ;)';
+    // expects player
+    if(!options || !options.player){
+      throw 'player required! who the hell leaves this trace? ;)';
     }
-    this.operator = options.operator;
+    this.player = options.player;
 
     // setup store for caching
-    if(this.operator.store){
-      this.store = this.operator.store;
+    if(this.player.store){
+      this.store = this.player.store;
     }
   },
 

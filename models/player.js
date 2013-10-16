@@ -1,7 +1,7 @@
 var Track = require('../collections/track');
 var Story = require('../collections/story');
 
-var Operator = Backbone.Model.extend({
+var Player = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
@@ -22,11 +22,11 @@ var Operator = Backbone.Model.extend({
     this.on('change', this.cache);
 
     // track and story
-    this.track = new Track([], { operator: this });
-    this.story = new Story([], { operator: this });
+    this.track = new Track([], { player: this });
+    this.story = new Story([], { player: this });
 
     // geolocation
-    // for now only LocalOperator!
+    // for now only LocalPlayer!
     if(this.geolocation){
       this.geolocation.enable();
       this.geolocation.on('position', this._newPosition);
@@ -34,7 +34,7 @@ var Operator = Backbone.Model.extend({
   },
 
   cache: function(){
-    console.log('Operator.cache()');
+    console.log('Player.cache()');
     this.store.put(this.id + '/profile', this.toJSON(), function(err){
       if(err){
         console.log(err);
@@ -44,7 +44,7 @@ var Operator = Backbone.Model.extend({
   },
 
   load: function(){
-    console.log('Operator.load()');
+    console.log('Player.load()');
     this.store.get(this.id + '/profile', function(err, data){
       if(err){
         console.log(err);
@@ -70,4 +70,4 @@ var Operator = Backbone.Model.extend({
 
 });
 
-module.exports = Operator;
+module.exports = Player;

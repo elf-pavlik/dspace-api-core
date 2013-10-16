@@ -4,7 +4,7 @@ describe('Group', function(){
 
   describe('initialize', function(){
 
-    it('should set model to *Operator*');
+    it('should set model to *Player*');
 
   });
 });
