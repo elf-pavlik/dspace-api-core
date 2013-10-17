@@ -30,6 +30,11 @@ var Player = Backbone.Model.extend({
     // for now only LocalPlayer!
     if(this.geolocation){
       this.geolocation.enable();
+
+      // handle geolocation updates
+      // one time callback for 'position:first' event
+      this.geolocation.once('position', this._firstPosition);
+
       this.geolocation.on('position', this._newPosition);
     }
   },
@@ -63,10 +68,8 @@ var Player = Backbone.Model.extend({
 
   // callback for geolocation which adds positions to track and triggers event if position changed
   _newPosition: function(position){
+    this.trigger('change:position', position);
     this.track.add(position);
-    if(!_.isEqual(position.coords, this.currentPosition.coords)){
-      this.trigger('change:position', position);
-    }
   }
 
 });

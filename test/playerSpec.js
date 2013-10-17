@@ -1,5 +1,3 @@
-var DSpace = require('../dspace');
-
 var Player = require('../models/player');
 var LocalPlayer = require('../models/localPlayer');
 var RemotePlayer = require('../models/remotePlayer');
@@ -50,7 +48,7 @@ describe('Player', function(){
       expect(player.geolocation.isEnabled()).to.be.true;
     });
 
-    it('should subscribe to *position* event'); // ???
+    it('should subscribe to *position* event with _newPosition'); // ???
 
   });
 
@@ -73,6 +71,11 @@ describe('Player', function(){
   });
 
   describe('geo', function(){
+
+    beforeEach(function(){
+      player = new Player({ uuid: uuid }, { store: {} });
+      player.store.put = sinon.stub();
+    });
 
     var firstPosition = { coords: { latitude: 47, longitude: 15}, timestamp: 1381855568774 };
     var secondPosition = { coords: { latitude: 55, longitude: 22}, timestamp: 1381855569774 };
@@ -105,7 +108,16 @@ describe('Player', function(){
         expect(player.track.length).to.equal(3);
       });
 
-      it('should trigger *change:position* event if really changed and pass position', function(done){
+      it('should trigger *change:position* for first position', function(done){
+        player.track.reset();
+        player.on('change:position', function(position){
+          expect(position.coords).to.be.an('object');
+          done();
+        });
+        player._newPosition(firstPosition);
+      });
+
+      it('should trigger *change:position* for next position', function(done){
         player.track.reset();
         player.track.add(firstPosition);
         player.on('change:position', function(position){
@@ -114,9 +126,6 @@ describe('Player', function(){
         });
         player._newPosition(secondPosition);
       });
-
-      it('should not trigger *change:position* event if not really changed');
-
     });
   });
 });
@@ -127,6 +136,7 @@ describe('LocalPlayer', function(){
   describe('uuid', function(){
 
     beforeEach(function(){
+      player = new LocalPlayer();
       localStorage.clear();
     });
 
