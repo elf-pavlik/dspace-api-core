@@ -1,6 +1,6 @@
 var Player = require('../models/player');
 
-var Group = Backbone.Collection.extend({
+var Team = Backbone.Collection.extend({
 
   model: Player,
 
@@ -12,4 +12,4 @@ var Group = Backbone.Collection.extend({
 
 });
 
-module.exports = Group;
+module.exports = Team;

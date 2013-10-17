@@ -1,6 +1,6 @@
-var Group = require('../collections/group');
+var Team = require('../collections/team');
 
-describe('Group', function(){
+describe('Team', function(){
 
   describe('initialize', function(){
 
