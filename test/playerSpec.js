@@ -55,22 +55,21 @@ describe('Player', function(){
   });
 
   describe('cache', function(){
-    //FIXME
-    //it('should cache data when it changes', function(done){
-      //var dspace = new DSpace('test');
-      //dspace.on('ready', function() {
-        //var player = new Player({ uuid: uuid }, { store: dspace.store });
-        //sinon.spy(player, 'cache');
-        //player.set('name', 'Jane');
-        //expect(player.cache).calledOnce;
-        //done();
-      //});
+    //FIXME stubbing works if this.on('change', function(){ this.cache(); }.bind(this))
+    //it('should cache data when it changes', function(){
+      //var player = new Player({ uuid: uuid }, { store: {} });
+      //sinon.stub(player, 'cache');
+      //player.set('name', 'Jane');
+      //expect(player.cache).calledOnce;
     //});
+    //
     it('should trigger event *cached*');
+
   });
 
   describe('load', function(){
     it('should trigger event *loaded*');
+    it('should set loaded attributes silently');
   });
 
   describe('geo', function(){
@@ -147,6 +146,14 @@ describe('LocalPlayer', function(){
     it('should initialize geolocation', function(){
       var player = new LocalPlayer();
       expect(player.geolocation).to.be.an('object');
+    });
+
+    it('should call superclass passing attrs and options', function(){
+      sinon.spy(Player.prototype, 'initialize');
+      var attrs = { foo: 'bar' };
+      var options = { store: {} };
+      var player = new LocalPlayer(attrs, options);
+      expect(Player.prototype.initialize).calledWith(attrs, options);
     });
   });
 });

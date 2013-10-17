@@ -5,7 +5,7 @@ var Player = Backbone.Model.extend({
 
   idAttribute: 'uuid',
 
-  initialize: function(attributes, options){
+  initialize: function(attrs, options){
     _.bindAll(this, 'cache', '_newPosition');
 
     // easy access to store
@@ -18,6 +18,7 @@ var Player = Backbone.Model.extend({
       throw 'UUID required!';
     }
 
+    // profile
     this.set('@type', 'person', { silent: true });
     this.on('change', this.cache);
 
@@ -35,22 +36,22 @@ var Player = Backbone.Model.extend({
 
   cache: function(){
     console.log('Player.cache()');
-    this.store.put(this.id + '/profile', this.toJSON(), function(err){
+    this.store.put(this.id, this.toJSON(), function(err){
       if(err){
         console.log(err);
       }
       this.trigger('cached');
-    });
+    }.bind(this));
   },
 
   load: function(){
     console.log('Player.load()');
-    this.store.get(this.id + '/profile', function(err, data){
+    this.store.get(this.id, { asBuffer: false }, function(err, data){
       if(err){
         console.log(err);
         return;
       }
-      this.set(data);
+      this.set(data, { silent: true });
       this.trigger('loaded');
     }.bind(this));
   },

@@ -4,7 +4,7 @@ var uuid = require('node-uuid');
 
 var LocalPlayer = Player.extend({
 
-  initialize: function() {
+  initialize: function(attrs, options) {
     /*
      * set uuid
      * * use one saved in localStorage
@@ -22,7 +22,7 @@ var LocalPlayer = Player.extend({
     this.geolocation = new BrowserGeoLocation();
 
     // super
-    Player.prototype.initialize.call(this);
+    Player.prototype.initialize.call(this, attrs, options);
   }
 });
 
