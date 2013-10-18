@@ -16,7 +16,13 @@ var Track = Backbone.Collection.extend({
       this.store = this.player.store;
     }
 
-    this.on('add', this.cache);
+    // FIXME deal with load:error situation
+    this.on('load:error load:success', function(){
+      this.on('add', this.cache);
+    }.bind(this));
+
+    // try to load initial track
+    this.load();
   },
 
   cache: function() {
@@ -34,10 +40,11 @@ var Track = Backbone.Collection.extend({
     this.store.get('tracks/' + this.player.id, { asBuffer: false }, function(err, data){
       if(err){
         console.log(err);
+        this.trigger('load:error');
         return;
       }
       this.set(data, { silent: true });
-      this.trigger('loaded');
+      this.trigger('load:success');
     }.bind(this));
   }
 });

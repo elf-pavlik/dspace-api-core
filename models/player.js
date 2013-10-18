@@ -20,7 +20,6 @@ var Player = Backbone.Model.extend({
 
     // profile
     this.set('@type', 'person', { silent: true });
-    this.on('change', this.cache);
 
     // track and story
     this.track = new Track([], { player: this });
@@ -32,6 +31,12 @@ var Player = Backbone.Model.extend({
       // handle geolocation updates
       this.geolocation.on('position', this._newPosition);
     }
+
+    // FIXME
+    this.on('load:success load:error', function(){
+      // chache when changes
+      this.on('change', this.cache);
+    }.bind(this));
   },
 
   cache: function(){
@@ -49,10 +54,11 @@ var Player = Backbone.Model.extend({
     this.store.get(this.id, { asBuffer: false }, function(err, data){
       if(err){
         console.log(err);
+        this.trigger('load:error');
         return;
       }
       this.set(data, { silent: true });
-      this.trigger('loaded');
+      this.trigger('load:success');
     }.bind(this));
   },
 

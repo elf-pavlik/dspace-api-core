@@ -19,7 +19,11 @@ describe('Track', function(){
       expect(track.store).to.be.an('object');
     });
 
+    it('should try to load track');
+
     it('should cache when new points added');
+
+    it('should NOT cache before trying to load first');
   });
 
   describe('cache', function(){
