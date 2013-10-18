@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         tasks: ['jshint']
       },
       doc: {
-        files: 'README.md',
+        files: ['README.md', 'doc/*.md'],
         tasks:['markdown'],
         options: {
           livereload: 35830
@@ -34,6 +34,12 @@ module.exports = function(grunt) {
           {
             src: 'README.md',
             dest: 'tmp/doc/README.md.html'
+          },
+          {
+            expand: true,
+            src: 'doc/*.md',
+            dest: 'tmp/',
+            ext: '.md.html'
           }
         ]
       }
