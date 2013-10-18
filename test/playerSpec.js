@@ -21,11 +21,6 @@ describe('Player', function(){
       expect(player.get('@type')).to.equal('person');
     });
 
-    it('should set store if passed in options',function(){
-      player = new Player({ uuid: uuid }, { store: {} });
-      expect(player.store).to.be.an('object');
-    });
-
     it('should throw error if no uuid');
 
     it('should create track', function(){
@@ -48,29 +43,10 @@ describe('Player', function(){
 
   });
 
-  describe('cache', function(){
-    //FIXME stubbing works if this.on('change', function(){ this.cache(); }.bind(this))
-    //it('should cache data when it changes', function(){
-      //var player = new Player({ uuid: uuid }, { store: {} });
-      //sinon.stub(player, 'cache');
-      //player.set('name', 'Jane');
-      //expect(player.cache).calledOnce;
-    //});
-    //
-    it('should trigger event *cached*');
-
-  });
-
-  describe('load', function(){
-    it('should trigger event *loaded*');
-    it('should set loaded attributes silently');
-  });
-
   describe('geo', function(){
 
     beforeEach(function(){
       player = new Player({ uuid: uuid }, { store: {} });
-      player.store.put = sinon.stub();
     });
 
     var firstPosition = { coords: { latitude: 47, longitude: 15}, timestamp: 1381855568774 };
@@ -157,7 +133,7 @@ describe('LocalPlayer', function(){
     it('should call superclass passing attrs and options', function(){
       sinon.spy(Player.prototype, 'initialize');
       var attrs = { foo: 'bar' };
-      var options = { store: {} };
+      var options = { beep: 'boop' };
       var player = new LocalPlayer(attrs, options);
       expect(Player.prototype.initialize).calledWith(attrs, options);
       Player.prototype.initialize.restore();
@@ -174,13 +150,10 @@ describe('RemotePlayer', function(){
     it('should call superclass passing attrs and options', function(){
       sinon.spy(Player.prototype, 'initialize');
       var attrs = { uuid: uuid };
-      var options = { store: {} };
-      options.store.put = sinon.stub();
+      var options = { beep: 'boop'};
       var player = new RemotePlayer(attrs, options);
       expect(Player.prototype.initialize).calledWith(attrs, options);
       Player.prototype.initialize.restore();
     });
-
-    it('should cache');
   });
 });

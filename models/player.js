@@ -6,12 +6,7 @@ var Player = Backbone.Model.extend({
   idAttribute: 'uuid',
 
   initialize: function(attrs, options){
-    _.bindAll(this, 'cache', '_newPosition');
-
-    // easy access to store
-    if(options && options.store){
-      this.store = options.store;
-    }
+    _.bindAll(this, '_newPosition');
 
     // throw error if no uuid
     if(!this.get('uuid')){
@@ -32,34 +27,6 @@ var Player = Backbone.Model.extend({
       this.geolocation.on('position', this._newPosition);
     }
 
-    // FIXME
-    this.on('load:success load:error', function(){
-      // chache when changes
-      this.on('change', this.cache);
-    }.bind(this));
-  },
-
-  cache: function(){
-    console.log('Player.cache()');
-    this.store.put(this.id, this.toJSON(), function(err){
-      if(err){
-        console.log(err);
-      }
-      this.trigger('cached');
-    }.bind(this));
-  },
-
-  load: function(){
-    console.log('Player.load()');
-    this.store.get(this.id, { asBuffer: false }, function(err, data){
-      if(err){
-        console.log(err);
-        this.trigger('load:error');
-        return;
-      }
-      this.set(data, { silent: true });
-      this.trigger('load:success');
-    }.bind(this));
   },
 
   // returns current position by taking last element from track
