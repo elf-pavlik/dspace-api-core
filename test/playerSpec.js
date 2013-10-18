@@ -44,10 +44,6 @@ describe('Player', function(){
 
     player = new LocalPlayer();
 
-    it('should enable geolocation', function(){
-      expect(player.geolocation.isEnabled()).to.be.true;
-    });
-
     it('should subscribe to *position* event with _newPosition'); // ???
 
   });
@@ -164,10 +160,27 @@ describe('LocalPlayer', function(){
       var options = { store: {} };
       var player = new LocalPlayer(attrs, options);
       expect(Player.prototype.initialize).calledWith(attrs, options);
+      Player.prototype.initialize.restore();
     });
   });
 });
 
 
 describe('RemotePlayer', function(){
+
+  var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+
+  describe('initialize', function(){
+    it('should call superclass passing attrs and options', function(){
+      sinon.spy(Player.prototype, 'initialize');
+      var attrs = { uuid: uuid };
+      var options = { store: {} };
+      options.store.put = sinon.stub();
+      var player = new RemotePlayer(attrs, options);
+      expect(Player.prototype.initialize).calledWith(attrs, options);
+      Player.prototype.initialize.restore();
+    });
+
+    it('should cache');
+  });
 });

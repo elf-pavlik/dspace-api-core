@@ -29,12 +29,7 @@ var Player = Backbone.Model.extend({
     // geolocation
     // for now only LocalPlayer!
     if(this.geolocation){
-      this.geolocation.enable();
-
       // handle geolocation updates
-      // one time callback for 'position:first' event
-      this.geolocation.once('position', this._firstPosition);
-
       this.geolocation.on('position', this._newPosition);
     }
   },

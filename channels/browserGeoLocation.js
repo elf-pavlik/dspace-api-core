@@ -8,7 +8,13 @@ var BrowserGeoLocation = function(){
   this.enable = function(){
     this.watcherID = navigator.geolocation.watchPosition(
       function(position){
-        this.trigger('position', position);
+        //FIXME switch to http://lodash.com/docs#pick ?
+        var copy = { coords: {} };
+        copy.timestamp = position.timestamp;
+        copy.coords.latitude = position.coords.latitude;
+        copy.coords.longitude = position.coords.longitude;
+        copy.coords.accuracy = position.coords.accuracy;
+        this.trigger('position', copy);
       }.bind(this),
       function(error){
         switch(error.code) {
@@ -37,11 +43,13 @@ var BrowserGeoLocation = function(){
         //timeout: 300000 //in ms
       }
     );
+    console.log('BrowserGeoLocation.enable()');
   }.bind(this);
 
   this.disable = function(){
     navigator.geolocation.clearWatch(this.watcherID);
     delete this.watcherID;
+    console.log('BrowserGeoLocation.disable()');
   }.bind(this);
 
   this.isEnabled = function(){
