@@ -155,5 +155,15 @@ describe('RemotePlayer', function(){
       expect(Player.prototype.initialize).calledWith(attrs, options);
       Player.prototype.initialize.restore();
     });
+
+    it('should set geolocation if present', function(){
+      var attrs = { uuid: uuid };
+      var options = { geolocation: {} };
+      options.geolocation.on = sinon.stub();
+      var player = new RemotePlayer(attrs, options);
+      expect(player.geolocation).to.exist;
+
+    });
   });
+
 });

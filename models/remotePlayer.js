@@ -4,6 +4,15 @@ var Player = require('./player');
 var RemotePlayer = Player.extend({
 
   // FIXME what if no uuid?
+  initialize: function(attrs, options) {
+
+    if(options && options.geolocation){
+      this.geolocation = options.geolocation;
+    }
+
+    // super
+    Player.prototype.initialize.call(this, attrs, options);
+  }
 
 });
 
