@@ -108,7 +108,7 @@ describe('LocalPlayer', function(){
   describe('uuid', function(){
 
     beforeEach(function(){
-      player = new LocalPlayer();
+      player = new LocalPlayer({ channels: { track: {} } },{ dspace: {}});
       localStorage.clear();
     });
 
@@ -138,32 +138,36 @@ describe('LocalPlayer', function(){
       expect(Player.prototype.initialize).calledWith(attrs, options);
       Player.prototype.initialize.restore();
     });
+
+    it('should setup channel for publishing position');
+    it('should publish changes to the position');
   });
 });
 
 
 describe('RemotePlayer', function(){
 
-  var uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+  //beforeEach(function(){
+    //this.uuid = 'd05f6115-676e-445c-8242-fa319df4a897';
+    //this.attrs = { uuid: this.uuid, channels: { track: {}} };
+    //this.options = { dspace: {} };
+    //this.fakeChan = { on: function(){} };
+    //this.options.dspace.getGeolocationChannel = sinon.stub.returns(this.fakeChan);
+  //});
 
-  describe('initialize', function(){
-    it('should call superclass passing attrs and options', function(){
-      sinon.spy(Player.prototype, 'initialize');
-      var attrs = { uuid: uuid };
-      var options = { beep: 'boop'};
-      var player = new RemotePlayer(attrs, options);
-      expect(Player.prototype.initialize).calledWith(attrs, options);
-      Player.prototype.initialize.restore();
-    });
+  //describe('initialize', function(){
+    //it('should call superclass passing attrs and options', function(){
+      //sinon.spy(Player.prototype, 'initialize');
+      //var player = new RemotePlayer(this.attrs, this.options);
+      //expect(Player.prototype.initialize).calledWith(this.attrs, this.options);
+      //Player.prototype.initialize.restore();
+    //});
 
-    it('should set geolocation if present', function(){
-      var attrs = { uuid: uuid };
-      var options = { geolocation: {} };
-      options.geolocation.on = sinon.stub();
-      var player = new RemotePlayer(attrs, options);
-      expect(player.geolocation).to.exist;
+    //it('should set geolocation', function(){
+      //var player = new RemotePlayer(this.attrs, this.options);
+      //expect(player.geolocation).to.exist;
 
-    });
-  });
+    //});
+  //});
 
 });

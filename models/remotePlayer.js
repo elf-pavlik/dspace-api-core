@@ -6,9 +6,7 @@ var RemotePlayer = Player.extend({
   // FIXME what if no uuid?
   initialize: function(attrs, options) {
 
-    if(options && options.geolocation){
-      this.geolocation = options.geolocation;
-    }
+    this.geolocation = options.dspace.getGeolocationChannel(this.get('channels').track);
 
     // super
     Player.prototype.initialize.call(this, attrs, options);
