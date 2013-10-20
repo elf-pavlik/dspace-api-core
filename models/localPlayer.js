@@ -7,14 +7,16 @@ var LocalPlayer = Player.extend({
 
     _.bindAll(this, 'publishPosition');
 
+    this.settings = options.settings;
+
     // use browser geolocation
-    this.geolocation = new BrowserGeoLocation();
+    this.geolocation = new BrowserGeoLocation(this.settings);
 
     // super
     Player.prototype.initialize.call(this, attrs, options);
 
     // channel to publish changes to position
-    this.positionChannel = options.dspace.getChannel(this.get('channels').track);
+    this.positionChannel = options.nexus.getChannel(this.get('channels').track);
     this.on('change:position', this.publishPosition);
   },
 

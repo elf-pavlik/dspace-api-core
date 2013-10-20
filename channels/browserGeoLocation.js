@@ -1,6 +1,6 @@
 var Position = require('../models/position');
 
-var BrowserGeoLocation = function(){
+var BrowserGeoLocation = function(settings){
 
   // mix in events
   _.extend(this, Backbone.Events);
@@ -37,11 +37,7 @@ var BrowserGeoLocation = function(){
         // this.disable();
 
       }.bind(this),
-      {
-        //enableHighAccuracy: true,
-        //maximumAge: 1000, // in ms
-        //timeout: 300000 //in ms
-      }
+      settings
     );
     console.log('BrowserGeoLocation.enable()');
   }.bind(this);
