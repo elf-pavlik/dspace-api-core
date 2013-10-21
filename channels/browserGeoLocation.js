@@ -2,10 +2,10 @@ var Position = require('../models/position');
 
 var BrowserGeoLocation = function(settings){
 
-  // mix in events
-  _.extend(this, Backbone.Events);
+  this.settings = settings;
 
-  this.enable = function(){
+  this.sub = function(callback){
+    this.callback = callback;
     this.watcherID = navigator.geolocation.watchPosition(
       function(position){
         //FIXME switch to http://lodash.com/docs#pick ?
@@ -14,7 +14,7 @@ var BrowserGeoLocation = function(settings){
         copy.coords.latitude = position.coords.latitude;
         copy.coords.longitude = position.coords.longitude;
         copy.coords.accuracy = position.coords.accuracy;
-        this.trigger('position', copy);
+        this.callback(copy);
       }.bind(this),
       function(error){
         switch(error.code) {
@@ -37,16 +37,18 @@ var BrowserGeoLocation = function(settings){
         // this.disable();
 
       }.bind(this),
-      settings
+      this.settings
     );
     console.log('BrowserGeoLocation.enable()');
   }.bind(this);
 
-  this.disable = function(){
+  this.bye = function(){
     navigator.geolocation.clearWatch(this.watcherID);
+    delete this.callback;
     delete this.watcherID;
     console.log('BrowserGeoLocation.disable()');
   }.bind(this);
+
 
   this.isEnabled = function(){
     return this.watcherID ? true : false;

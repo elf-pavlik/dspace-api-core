@@ -17,7 +17,7 @@ var Player = Backbone.Model.extend({
     // track events
     this.track.on('add', function(position){
       this.trigger('change:position', position);
-    });
+    }.bind(this));
 
     this.story = new Story([], { player: this });
 

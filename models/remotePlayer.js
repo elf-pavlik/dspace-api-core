@@ -9,8 +9,8 @@ var RemotePlayer = Player.extend({
     this.nexus = options.nexus;
 
     this.track = new Track([], {
-      feed: this.nexus.getFeed(this.get('feeds').track),
-      channel: this.nexus.getGeolocationChannel(this.get('channels').track)
+      feed: this.nexus.getFeed(this.get('track').feed),
+      channel: this.nexus.getChannel(this.get('track').channel)
     });
 
     // super

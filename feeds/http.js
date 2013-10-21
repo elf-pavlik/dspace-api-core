@@ -17,7 +17,7 @@ var HTTPFeed = function(path, hub){
   this.hub = hub;
 
   // fetching data
-  this.fetch = function(callback){
+  this.pull = function(callback){
     $.getJSON(this.hub.url + this.path, callback);
   };
 };

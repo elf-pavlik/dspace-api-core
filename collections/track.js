@@ -15,9 +15,16 @@ var Track = Backbone.Collection.extend({
       throw 'Track requires channel!';
     }
     this.channel = options.channel;
-    this.channel.on('position', function(position){
+    this.channel.sub(function(position){
       this.add(position);
     }.bind(this));
+
+    // fetch initial data TODO make it easier to controll + cache, synce etc.
+    this.feed.pull(function(data){
+      this.set(data, { silent: true });
+      this.trigger('loaded');
+    }.bind(this));
+
 
   }
 });

@@ -13,22 +13,22 @@ var LocalPlayer = Player.extend({
 
     // use browser geolocation as channels.in
     this.track = new Track([], {
-      feed: this.nexus.getFeed(this.get('feeds').track),
-      channel: new BrowserGeoLocation(this.settings)
+      feed: this.nexus.getFeed(this.get('track').feed),
+      channel: new BrowserGeoLocation(this.settings.geolocation)
     });
 
     // super
     Player.prototype.initialize.call(this, attrs, options);
 
     // channel to publish changes to position
-    this.positionChannel = this.nexus.getChannel(this.get('channels').track);
+    this.positionChannel = this.nexus.getChannel(this.get('track').channel);
     this.on('change:position', this.publishPosition);
   },
 
   publishPosition: function(position){
     // 'sign' before publishing
     position.player = { uuid: this.get('uuid') };
-    this.positionChannel.publish(position);
+    this.positionChannel.pub(position);
   }
 
 });
