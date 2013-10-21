@@ -1,13 +1,17 @@
 var Player = require('./player');
+var Track = require('../collections/track');
 
 // represents people connecting through other devices
 var RemotePlayer = Player.extend({
 
   initialize: function(attrs, options) {
 
-    // FIXME what if no uuid?
+    this.nexus = options.nexus;
 
-    this.geolocation = options.nexus.getGeolocationChannel(this.get('channels').track);
+    this.track = new Track([], {
+      feed: this.nexus.getFeed(this.get('feeds').track),
+      channel: this.nexus.getGeolocationChannel(this.get('channels').track)
+    });
 
     // super
     Player.prototype.initialize.call(this, attrs, options);

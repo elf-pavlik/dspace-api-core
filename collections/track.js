@@ -4,11 +4,21 @@ var Track = Backbone.Collection.extend({
 
   initialize: function(models, options){
 
-    // expects player
-    if(!options || !options.player){
-      throw 'player required! who the hell leaves this trace? ;)';
+    // expects feed and channels
+    if(!options || !options.feed){
+      throw 'Track requires feed!';
     }
-    this.player = options.player;
+    this.feed = options.feed;
+
+    // only in channel, out(s) handled on player level
+    if(!options || !options.channel){
+      throw 'Track requires channel!';
+    }
+    this.channel = options.channel;
+    this.channel.on('position', function(position){
+      this.add(position);
+    }.bind(this));
+
   }
 });
 
