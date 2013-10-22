@@ -1,3 +1,5 @@
+var request = require('superagent');
+
 var HTTPFeed = function(path, hub){
 
   // expects absolute path
@@ -18,7 +20,9 @@ var HTTPFeed = function(path, hub){
 
   // fetching data
   this.pull = function(callback){
-    $.getJSON(this.hub.url + this.path, callback);
+    request.get(this.hub.url + this.path, function(res){
+      callback(res.body);
+    });
   };
 };
 

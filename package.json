@@ -15,8 +15,8 @@
     "DSpace-NG"
   ],
   "author": {
-      "name": "☮ elf Pavlik ☮",
-      "email": "perpetual-tripper@wwelves.org"
+    "name": "☮ elf Pavlik ☮",
+    "email": "perpetual-tripper@wwelves.org"
   },
   "contributors": [
     {
@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "node-uuid": "~1.4.1",
-    "level-js": "~1.0.8"
+    "level-js": "~1.0.8",
+    "superagent": "~0.15.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
