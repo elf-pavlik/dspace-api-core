@@ -21,8 +21,10 @@ var HTTPFeed = function(path, hub){
   // fetching data
   this.pull = function(callback){
     request.get(this.hub.url + this.path, function(res){
-      callback(res.body);
-    });
+      if(res.status === 200){
+        callback(JSON.parse(res.text));
+      }
+    }.bind(this));
   };
 };
 

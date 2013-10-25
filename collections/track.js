@@ -1,4 +1,8 @@
+var Position = require('../models/position');
+
 var Track = Backbone.Collection.extend({
+
+  model: Position,
 
   comparator: 'timestamp',
 
