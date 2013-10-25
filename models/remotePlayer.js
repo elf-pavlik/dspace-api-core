@@ -12,6 +12,9 @@ var RemotePlayer = Player.extend({
       feed: this.nexus.getFeed(this.get('track').feed),
       channel: this.nexus.getChannel(this.get('track').channel)
     });
+    this.track.on('loaded', function(){
+      this.trigger('change:position', this.currentPosition());
+    }.bind(this));
 
     // super
     Player.prototype.initialize.call(this, attrs, options);
