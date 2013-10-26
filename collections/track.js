@@ -24,6 +24,7 @@ var Track = Backbone.Collection.extend({
     }.bind(this));
 
     // fetch initial data TODO make it easier to controll + cache, synce etc.
+
     this.feed.pull(function(data){
       this.set(data, { silent: true });
       this.trigger('loaded');
