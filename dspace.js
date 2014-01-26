@@ -1,27 +1,24 @@
-var leveljs = require('level-js');
+var Nexus = require('./nexus');
+var Party = require('./collections/party');
 
-var DSpace = function(namespace){
+var DSpace = function(map, Roster, BayeuxHub, config){
 
-  /*
-   * enable events
-   */
-  _.extend(this, Backbone.Events);
+  this.config = config;
+  this.map = map;
 
-  /*
-   * ready event
-   *
-   * we need to setup cache first
-   */
+  this.nexus = new Nexus(config, BayeuxHub);
 
-  this.store = leveljs(namespace);
+  // FIXME support multiple parties!
+  this.party = new Party([], {config: config, nexus: this.nexus });
 
-  this.store.open(function(err){
-    if(err){
-      console.log(err);
-      return;
-    }
-    this.trigger('ready');
-  }.bind(this));
+  this.roster = new Roster(this.party, this.map.frame);
+
+  // various handy functions
+  this.utils = {
+
+    // #attribution: http://www.paulirish.com/2009/random-hex-color-code-snippets/
+    randomColor: function(){ return '#' + Math.floor(Math.random()*16777215).toString(16); }
+  };
 };
 
 module.exports = DSpace;
