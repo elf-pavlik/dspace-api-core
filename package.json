@@ -29,6 +29,7 @@
     "url": "https://github.com/DSpace-NG/dspace-api-core/issues"
   },
   "dependencies": {
+    "backbone-virtual-collection": "~0.4.5",
     "node-uuid": "~1.4.1",
     "level-js": "~1.0.8",
     "superagent": "~0.15.7"
